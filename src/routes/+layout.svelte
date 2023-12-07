@@ -1,15 +1,34 @@
 <script lang="ts">
-	
+	import Viem from '../components/Viem.svelte'
 </script>
 
 
-<header class="row">
-	<h1>TokenGated</h1>
+<Viem>
+	{#snippet children({
+		publicClient,
+		walletClient,
+		account,
+		connectAccount,
+		disconnectAccount,
+	})}
+		<header class="row">
+			<h1>TokenGated</h1>
 
-	<div class="row">
-		<button>Connect</button>
-	</div>
-</header>
+			<div class="row">
+				{#if !account}
+					<button
+						onclick={connectAccount}
+					>
+						Connect
+					</button>
+				{:else}
+					{account.slice(0, 6)}...{account.slice(-4)}
+					<button onclick={disconnectAccount}>Disconnect</button>
+				{/if}
+			</div>
+		</header>
+	{/snippet}
+</Viem>
 
 
 <style>
