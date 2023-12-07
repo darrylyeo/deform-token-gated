@@ -1,9 +1,12 @@
 <script lang="ts">
-	import Viem from '../components/Viem.svelte'
 	import { signInWithEthereum } from '$lib/siwe'
 
 
 	let isSignedIn = $state(false)
+	let isSigningIn = $state(false)
+
+
+	import Viem from '../components/Viem.svelte'
 </script>
 
 
@@ -26,28 +29,36 @@
 						Connect
 					</button>
 				{:else}
-					{account.slice(0, 6)}...{account.slice(-4)}
-
-					<button
-						onclick={() => {
-							disconnectAccount()
-							isSignedIn = false
-						}}
-					>Disconnect</button>
+					<div>
+						{#if !isSignedIn}
+							<span>Connected as </span>
+						{:else}
+							<span>Signed in as </span>
+						{/if}
+						{account.slice(0, 6)}...{account.slice(-4)}
+					</div>
 
 					{#if !isSignedIn}
-						<button
-							onclick={async () => {
-								isSignedIn = await signInWithEthereum({
-									publicClient,
-									walletClient,
-									account,
-									version: '0.0.1',
-								})
-							}}
-						>Sign In</button>
-					{:else}
-						Signed in!
+						{#if !isSigningIn}
+							<button
+								onclick={async () => {
+									isSigningIn = true
+									isSignedIn = await signInWithEthereum({
+										publicClient,
+										walletClient,
+										account,
+										version: '0.0.1',
+									})
+									isSigningIn = false
+								}}
+							>Sign In</button>
+						{:else}
+							<button
+								disabled
+							>
+								Signing in...
+							</button>
+						{/if}
 					{/if}
 
 					<button
