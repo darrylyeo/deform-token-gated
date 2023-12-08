@@ -1,12 +1,19 @@
 <script lang="ts">
-	import { signInWithEthereum } from '$lib/siwe'
-
-
+	// Internal state
 	let isSignedIn = $state(false)
 	let isSigningIn = $state(false)
 
 
+	// Functions
+	import { signInWithEthereum } from '$lib/siwe'
+
+
+	// Components
 	import Viem from '../components/Viem.svelte'
+
+
+	// Pages
+	import CreatePage from './create/+page.svelte'
 </script>
 
 
@@ -70,6 +77,18 @@
 				{/if}
 			</div>
 		</header>
+
+		<main class="column">
+			{#if !isSignedIn}
+				<p>Sign in to create or access token-gated pages!</p>
+			{:else}
+				<CreatePage {...{
+					publicClient,
+					walletClient,
+					account,
+				}} />
+			{/if}
+		</main>
 	{/snippet}
 </Viem>
 
@@ -80,6 +99,10 @@
 	header {
 		background-color: rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(10px);
+		padding: 2rem;
+	}
+
+	main {
 		padding: 2rem;
 	}
 </style>
