@@ -16,6 +16,10 @@
 	// Internal state
 	let title = $state('')
 	let content = $state('')
+
+
+	// Components
+	import MarkdownInput from './MarkdownInput.svelte'
 </script>
 
 
@@ -27,7 +31,7 @@
 
 	<label class="column">
 		<span>Content</span>
-		<textarea
+		<MarkdownInput
 			bind:value={content}
 		/>
 	</label>
