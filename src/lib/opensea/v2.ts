@@ -1055,7 +1055,7 @@ export function postOffer(chain: "arbitrum" | "arbitrum_goerli" | "arbitrum_nova
 /**
  * Get Order
  */
-export function getOrder(chain: "arbitrum" | "arbitrum_goerli" | "arbitrum_nova" | "avalanche" | "avalanche_fuji" | "baobab" | "base" | "base_goerli" | "bsc" | "bsctestnet" | "ethereum" | "goerli" | "klaytn" | "matic" | "mumbai" | "optimism" | "optimism_goerli" | "sepolia" | "solana" | "soldev" | "zora" | "zora_testnet", orderHash: string, protocolAddress: , opts?: Oazapfts.RequestOpts) {
+export function getOrder(chain: "arbitrum" | "arbitrum_goerli" | "arbitrum_nova" | "avalanche" | "avalanche_fuji" | "baobab" | "base" | "base_goerli" | "bsc" | "bsctestnet" | "ethereum" | "goerli" | "klaytn" | "matic" | "mumbai" | "optimism" | "optimism_goerli" | "sepolia" | "solana" | "soldev" | "zora" | "zora_testnet", orderHash: string, protocolAddress: string, opts?: Oazapfts.RequestOpts) {
     return oazapfts.ok(oazapfts.fetchJson<{
         status: 200;
         data: GetOrderResult;
