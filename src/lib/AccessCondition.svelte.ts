@@ -27,3 +27,5 @@ export class AccessCondition {
 		}
 	}
 }
+
+export type SerializedAccessCondition = ReturnType<AccessCondition['toJSON']>

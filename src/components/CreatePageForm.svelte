@@ -24,13 +24,26 @@
 
 	// Components
 	import MarkdownInput from './MarkdownInput.svelte'
+
+
+	// Form handling
+	import { enhance } from '$app/forms'
 </script>
 
 
-<form class="column">
+<form
+	method="POST"
+	action="/create"
+	use:enhance
+	class="column"
+>
 	<label class="card column">
 		<span>Title</span>
-		<input type="text" bind:value={title} />
+		<input
+			type="text"
+			name="title"
+			bind:value={title}
+		/>
 	</label>
 
 	<section class="card column">
@@ -42,7 +55,10 @@
 					<label class="column">
 						<span>Condition Type</span>
 
-						<select bind:value={condition.type}>
+						<select
+							bind:value={condition.type}
+							name="conditionType"
+						>
 							{#if conditions.length === 1}
 								<option value={AccessConditionType.None}>None (Public)</option>
 							{/if}
@@ -57,10 +73,13 @@
 
 							<input
 								type="text"
+								name="contractAddress"
 								bind:value={condition.contractAddress}
 								placeholder="0x..."
 							/>
 						</label>
+					{:else}
+						<input type="hidden" name="contractAddress" />
 					{/if}
 
 					{#if condition.type === AccessConditionType.OwnsSingleNft}
@@ -69,15 +88,19 @@
 
 							<input
 								type="number"
+								name="tokenId"
 								bind:value={condition.tokenId}
 								placeholder="0"
 							/>
 						</label>
+					{:else}
+						<input type="hidden" name="tokenId" />
 					{/if}
 				</div>
 
 				{#if conditions.length > 1}
 					<button
+						type="button"
 						onclick={() => conditions.splice(i, 1)}
 					>
 						Remove Condition
@@ -92,6 +115,7 @@
 
 		{#if !(conditions.length === 1 && conditions[0].type === AccessConditionType.None)}
 			<button
+				type="button"
 				onclick={() => conditions.push(new AccessCondition(AccessConditionType.OwnsNftInCollection))}
 			>Add Condition</button>
 		{/if}
@@ -99,8 +123,10 @@
 
 	<label class="card column">
 		<span>Content</span>
+
 		<MarkdownInput
 			bind:value={content}
+			name="content"
 		/>
 	</label>
 
