@@ -1,6 +1,6 @@
 module default {
 	type Page {
-		creatorAddress: Address;
+		required creatorAddress: Address;
 		required title: str;
 		content: str;
 		multi conditions: AccessCondition;
