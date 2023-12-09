@@ -4,12 +4,18 @@
 
 
 	let {
-		value
+		value,
+		name
 	} = $props<{
 		value: string,
+		name?: string,
 	}>()
 </script>
 
+
+{#if name}
+	<input name={name} type="hidden" bind:value />
+{/if}
 
 <CartaEditor
 	carta={new Carta({
