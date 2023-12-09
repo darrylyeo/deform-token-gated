@@ -39,7 +39,7 @@
 >
 	<input
 		type="hidden"
-		name="userAddress"
+		name="creatorAddress"
 		value={address}
 	/>
 
