@@ -3,6 +3,7 @@ import type { Address } from 'viem'
 import type { Actions } from './$types'
 
 import { client, e } from '../../database/client'
+import { redirect } from '@sveltejs/kit'
 
 
 export const actions = {
@@ -67,8 +68,6 @@ export const actions = {
 
 		console.log({result})
 
-		return {
-			result,
-		}
+		return redirect(303, `/page/${result.id}`)
 	},
 } satisfies Actions
