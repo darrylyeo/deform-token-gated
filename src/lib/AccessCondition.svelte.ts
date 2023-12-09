@@ -1,7 +1,7 @@
 export enum AccessConditionType {
-	None,
-	OwnsNftInCollection,
-	OwnsSingleNft,
+	None = 'None',
+	OwnsNftInCollection = 'OwnsNftInCollection',
+	OwnsSingleNft = 'OwnsSingleNft',
 }
 
 export class AccessCondition {
