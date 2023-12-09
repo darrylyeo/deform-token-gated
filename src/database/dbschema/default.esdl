@@ -12,7 +12,7 @@ module default {
 			constraint min_value(1);
 		}
 		contractAddress: Address;
-		tokenId: str;
+		tokenId: bigint;
 	}
 
 	scalar type AccessConditionType extending enum<
