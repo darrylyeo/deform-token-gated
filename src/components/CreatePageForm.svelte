@@ -43,7 +43,9 @@
 						<span>Condition Type</span>
 
 						<select bind:value={condition.type}>
-							<option value={AccessConditionType.None}>None (Public)</option>
+							{#if conditions.length === 1}
+								<option value={AccessConditionType.None}>None (Public)</option>
+							{/if}
 							<option value={AccessConditionType.OwnsNftInCollection}>Owns any NFT in collection</option>
 							<option value={AccessConditionType.OwnsSingleNft}>Owns a particular NFT</option>
 						</select>
@@ -82,11 +84,17 @@
 					</button>
 				{/if}
 			</div>
+
+			{#if conditions.length > 1 && i < conditions.length - 1}
+				or
+			{/if}
 		{/each}
 
-		<button
-			onclick={() => conditions.push(new AccessCondition())}
-		>Add Condition</button>
+		{#if !(conditions.length === 1 && conditions[0].type === AccessConditionType.None)}
+			<button
+				onclick={() => conditions.push(new AccessCondition(AccessConditionType.OwnsNftInCollection))}
+			>Add Condition</button>
+		{/if}
 	</section>
 
 	<label class="card column">
