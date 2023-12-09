@@ -6,6 +6,7 @@ export const actions = {
 	default: async ({ request }) => {
 		const data = await request.formData()
 
+		const userAddress = data.get('userAddress')
 		const title = data.get('title')
 		const content = data.get('content')
 		const conditionTypes = data.getAll('conditionType') as unknown as AccessConditionType[]
@@ -19,6 +20,7 @@ export const actions = {
 		}))
 
 		console.log({
+			userAddress,
 			title,
 			content,
 			conditions,

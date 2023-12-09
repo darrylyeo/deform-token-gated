@@ -37,6 +37,12 @@
 	use:enhance
 	class="column"
 >
+	<input
+		type="hidden"
+		name="userAddress"
+		value={address}
+	/>
+
 	<label class="card column">
 		<span>Title</span>
 		<input
