@@ -12,13 +12,14 @@
 
 
 <CartaEditor
-	bind:value
 	carta={new Carta({
 		disableIcons: true,
 		extensions: [
 			code(),
 		],
 	})}
+	placeholder="> Write Markdown content here..."
+	bind:value
 />
 
 
