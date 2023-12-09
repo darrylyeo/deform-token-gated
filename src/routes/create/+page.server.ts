@@ -10,11 +10,13 @@ export const actions = {
 		const title = data.get('title')
 		const content = data.get('content')
 		const conditionTypes = data.getAll('conditionType') as unknown as AccessConditionType[]
+		const chainIds = data.getAll('chainId') as unknown as number[]
 		const contractAddresses = data.getAll('contractAddress') as unknown as Address[]
 		const tokenIds = data.getAll('tokenId') as unknown as number[]
 
 		const conditions: SerializedAccessCondition[] = conditionTypes.map((type, i) => ({
 			type,
+			chainId: chainIds[i],
 			contractAddress: contractAddresses[i],
 			tokenId: tokenIds[i],
 		}))

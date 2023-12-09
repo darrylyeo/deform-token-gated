@@ -75,6 +75,18 @@
 
 					{#if condition.type === AccessConditionType.OwnsNftInCollection || condition.type === AccessConditionType.OwnsSingleNft}
 						<label class="column">
+							<span>Network</span>
+
+							<select
+								bind:value={condition.chainId}
+								name="chainId"
+							>
+								<option value={1}>Ethereum</option>
+								<option value={5}>Goerli</option>
+							</select>
+						</label>
+
+						<label class="column">
 							<span>NFT Collection (Contract Address)</span>
 
 							<input
