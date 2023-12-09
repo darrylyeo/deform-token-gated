@@ -26,8 +26,17 @@ button {
 	align-items: center;
 	gap: 1em;
 }
+.row.equal > * {
+	flex: 1;
+}
 
 .column {
 	display: grid;
 	gap: 1em;
+}
+
+.card {
+	padding: 1em;
+	border-radius: 1em;
+	background-color: rgba(255, 255, 255, 0.5);
 }
