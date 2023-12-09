@@ -2,10 +2,7 @@ import type { AccessConditionType, SerializedAccessCondition } from '$lib/Access
 import type { Address } from 'viem'
 import type { Actions } from './$types'
 
-import * as edgedb from 'edgedb'
-import e from '../../database/dbschema/edgeql-js'
-
-const client = edgedb.createClient()
+import { client, e } from '../../database/client'
 
 
 export const actions = {
