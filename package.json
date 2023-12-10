@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "test:integration": "playwright test",
     "test:unit": "vitest",
+    "migrate:edgedb": "edgedb migrate && edgedb migration create",
     "generate:edgedb": "bunx @edgedb/generate edgeql-js --target ts",
     "generate:oazapfts:opensea:v2": "oazapfts ./src/lib/opensea/v2.openapi.json ./src/lib/opensea/v2.ts --optimistic --useEnumType"
   },
