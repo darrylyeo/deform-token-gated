@@ -41,7 +41,7 @@ const generateNonce = () => {
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
-export const prepareSiweMessage = (message: Optional<SiweMessageParams, 'domain' | 'statement'>) => (
+export const prepareSiweMessage = (message: Optional<SiweMessageParams, 'domain' | 'statement' | 'nonce' | 'issuedAt'>) => (
 	[
 		[
 			`${message.domain || globalThis.location.origin} wants you to sign in with your Ethereum account:`,
