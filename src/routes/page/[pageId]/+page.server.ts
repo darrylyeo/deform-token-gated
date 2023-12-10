@@ -4,7 +4,14 @@ import { AccessConditionType } from '$lib/AccessCondition.svelte'
 import { isNftContractHolder, isNftTokenHolder } from '../../../lib/alchemy'
 import { error } from '@sveltejs/kit'
 
-export const load: PageServerLoad = async ({ params: { pageId } }) => {
+export const load: PageServerLoad = async ({
+	params: { pageId },
+	locals: { session },
+}) => {
+	const { userAddress } = session.data
+
+	console.log('page event.locals.session.data', session.data)
+
 	const page = await (
 		e.params({
 			pageId: e.uuid,
@@ -28,8 +35,6 @@ export const load: PageServerLoad = async ({ params: { pageId } }) => {
 		))
 	)
 		.run(client, { pageId: pageId! })
-
-	const userAddress = ''
 
 	if(!page)
 		throw error(404, `Page ${pageId} not found`)
