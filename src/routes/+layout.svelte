@@ -2,16 +2,9 @@
 	import { page } from '$app/stores'
 
 
-	// External state
-	// import { isSignedIn, isSigningIn } from '../state/auth.svelte'
-
-
-	console.log('layout', $page.data.session)
 	// Internal state
-	// let isSignedIn = $state(!!$page.data.session.userAddress)
+	let authenticateForm = $state<HTMLFormElement>()
 	let isSigningIn = $state(false)
-
-	// let siweMessage = $state<string>()
 	let siweSignature = $state<string>()
 
 
@@ -19,6 +12,8 @@
 	// import { signInWithEthereum } from '$lib/siwe'
 
 	/*
+	import type { Address, PublicClient, WalletClient } from 'viem'
+
 	const formDataFromObject = (obj: Record<string, string>) => {
 		const formData = new FormData()
 
@@ -70,72 +65,15 @@
 			.then(response => response.text())
 			.then(deserialize)
 			.then((result) => {
-				console.log('authenticate', {result})
 				if (result.type !== 'success')
 					throw result
 
 				return result.data
 			})
 
-		console.log({isAuthenticated})
-
 		return isAuthenticated
 	}
 	*/
-
-	// $effect(() => {
-	// 	if(siweMessage){
-	// 		const form = document.createElement('form')
-	// 		form.method = 'POST'
-	// 		form.action = '/siwe?/authenticate'
-
-	// 		const userAddress = document.createElement('input')
-	// 		userAddress.type = 'hidden'
-	// 		userAddress.name = 'userAddress'
-	// 		userAddress.value = account
-
-	// 		const siweSignature = document.createElement('input')
-	// 		siweSignature.type = 'hidden'
-	// 		siweSignature.name = 'siweSignature'
-	// 		siweSignature.value = siweMessage
-
-	// 		const version = document.createElement('input')
-	// 		version.type = 'hidden'
-	// 		version.name = 'version'
-	// 		version.value = '0.0.1'
-
-	// 		form.appendChild(userAddress)
-	// 		form.appendChild(siweSignature)
-	// 		form.appendChild(version)
-
-	// 		document.body.appendChild(form)
-
-	// 		form.submit()
-	// 	}
-	// })
-
-
-	let authenticateForm = $state<HTMLFormElement>()
-
-	// $effect(() => {
-	// 	if(siweSignature){
-	// 		authenticateForm?.requestSubmit()
-	// 	}
-	// })
-
-
-	// Outputs
-	import { setContext, tick, type Snippet } from 'svelte'
-
-	// let { children } = $props<{
-	// 	children: Snippet<{
-	// 		isSignedIn: typeof isSignedIn,
-	// 	}>,
-	// }>()
-
-	// $effect(() => {
-	// 	setContext('isSignedIn', !!$page.data.session.userAddress)
-	// })
 
 
 	// Components
@@ -144,8 +82,7 @@
 
 	// Pages
 	import CreatePage from './create/+page.svelte'
-	import type { Address, PublicClient, WalletClient } from 'viem';
-	import { deserialize, enhance } from '$app/forms'
+	import { enhance } from '$app/forms'
 </script>
 
 
@@ -198,8 +135,6 @@
 									isSigningIn = true
 
 									return async ({ result, update }) => {
-										console.log('request', {result})
-
 										if(result.type !== 'success')
 											throw result
 
@@ -212,7 +147,6 @@
 
 										await update()
 
-										// await tick()
 										authenticateForm?.requestSubmit()
 									}
 								}}
@@ -230,16 +164,12 @@
 								method="POST"
 								action="/siwe?/authenticate"
 								bind:this={authenticateForm}
-								use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+								use:enhance={() => {
 									return async ({ result, update }) => {
-										console.log('authenticate', {result})
-
 										if(result.type !== 'success')
 											throw result
 
 										const isAuthenticated = result.data as unknown as boolean
-
-										console.log({ isAuthenticated })
 
 										await update()
 
@@ -281,16 +211,12 @@
 						<form
 							method="POST"
 							action="/siwe?/signOut"
-							use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+							use:enhance={() => {
 								return async ({ result, update }) => {
-									console.log('sign-out', {result})
-
 									if(result.type !== 'success')
 										throw result
 
 									const isSignedOut = result.data as unknown as boolean
-
-									console.log({ isSignedOut })
 
 									await update()
 								}

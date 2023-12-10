@@ -21,22 +21,16 @@ export const actions: Actions = {
 			uri: new URL(request.url).href,
 		})
 
-		console.log({siweMessage})
-
-		await locals.session.update(data => (console.log('old data', data), {
+		await locals.session.update(data => ({
 			...data,
 			siweMessage,
 		}))
-
-		console.log('request: locals.session.data', locals.session.data)
 
 		return siweMessage
 	},
 
 	authenticate: async ({ request, locals }) => {
 		const data = await request.formData()
-
-		console.log('authenticate: locals.session.data', locals.session.data)
 
 		const { siweMessage } = locals.session.data
 
