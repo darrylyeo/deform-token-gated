@@ -81,7 +81,6 @@
 
 
 	// Pages
-	import CreatePage from './create/+page.svelte'
 	import { enhance } from '$app/forms'
 </script>
 
@@ -234,21 +233,7 @@
 		</header>
 
 		<main class="column">
-			<!-- {@render children({
-				isSignedIn,
-			})} -->
 			<slot />
-
-
-			<!-- {#if !isSignedIn} -->
-				<p>Sign in to create or access token-gated pages!</p>
-			<!-- {:else} -->
-				<!-- <CreatePage {...{
-					publicClient,
-					walletClient,
-					account,
-				}} /> -->
-			<!-- {/if} -->
 		</main>
 	{/snippet}
 </Viem>

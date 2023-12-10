@@ -1,17 +1,6 @@
 <script lang="ts">
-	import type { Address, PublicClient, WalletClient } from 'viem'
-
-
-	// Inputs
-	let {
-		publicClient,
-		walletClient,
-		account,
-	} = $props<{
-		publicClient: PublicClient,
-		walletClient: WalletClient,
-		account: Address,
-	}>()
+	// Context
+	import { page } from '$app/stores'
 
 
 	// Compoonents
@@ -21,7 +10,10 @@
 
 <h2>Create Token-Gated Page</h2>
 
-<CreatePageForm
-	address={account}
-	chainId={publicClient.chain?.id}
-/>
+{#if !$page.data.session.userAddress}
+	Sign in to create or access token-gated pages!
+{:else}
+	<CreatePageForm
+		address={$page.data.session.userAddress}
+	/>
+{/if}

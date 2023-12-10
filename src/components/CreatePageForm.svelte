@@ -7,10 +7,10 @@
 	// Inputs
 	let {
 		address,
-		chainId,
+		// chainId,
 	} = $props<{
 		address: Address,
-		chainId: number,
+		// chainId: number,
 	}>()
 
 
