@@ -4,6 +4,8 @@ module default {
 		required title: str;
 		content: str;
 		multi conditions: AccessCondition;
+
+		isPublic := count(Page.conditions) = 0 or all(Page.conditions.conditionType = AccessConditionType.None);
 	}
 
 	type AccessCondition {
