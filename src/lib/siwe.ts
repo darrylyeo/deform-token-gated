@@ -1,5 +1,5 @@
 import { randomStringForEntropy } from '@stablelib/random'
-import type { Address, PublicClient } from 'viem'
+import { verifyMessage, type Address, type PublicClient } from 'viem'
 import type { WalletClient } from 'wagmi';
 
 
@@ -66,15 +66,21 @@ export const verifySiweSignature = async ({
 	message,
 	signature
 }: {
-	publicClient: PublicClient,
+	publicClient?: PublicClient,
 	address: Address,
 	message: string,
 	signature: Parameters<PublicClient['verifyMessage']>[0]['signature'],
 }) => (
-	await publicClient.verifyMessage({
+	publicClient ?
+		await publicClient.verifyMessage({
+			address,
+			message,
+			signature
+		})
+	: verifyMessage({
 		address,
 		message,
-		signature
+		signature,
 	})
 )
 
