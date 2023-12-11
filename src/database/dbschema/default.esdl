@@ -1,7 +1,9 @@
 module default {
 	type Page {
 		required creatorAddress: Address;
-		required title: str;
+		required title: str {
+			constraint min_len_value(1);
+		}
 		content: str;
 		multi conditions: AccessCondition;
 
