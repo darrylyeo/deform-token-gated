@@ -94,7 +94,12 @@
 		disconnectAccount,
 	})}
 		<header class="row">
-			<h1>TokenGated</h1>
+			<div class="row">
+				<nav class="row">
+					<a href="/"><h1>TokenGated</h1></a>
+					<a href="/create">Create</a>
+				</nav>
+			</div>
 
 			<div class="row">
 				{#if !$page.data.session.userAddress && !account}
@@ -246,6 +251,19 @@
 		background-color: rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(10px);
 		padding: 2rem;
+	}
+
+	nav {
+		gap: 2em;
+	}
+
+	nav a:not(:hover) {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	h1 {
+		font-size: 2rem;
 	}
 
 	main {
