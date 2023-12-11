@@ -28,13 +28,22 @@
 
 	// Form handling
 	import { enhance } from '$app/forms'
+	import { goto } from '$app/navigation'
 </script>
 
 
 <form
 	method="POST"
 	action="/create"
-	use:enhance
+	use:enhance={() => {
+		return async ({ result, update }) => {
+			await update()
+
+			if(result.type === 'success' && result.data?.redirectTo)
+				goto(result.data.redirectTo)
+		}
+	}}
+
 	class="column"
 >
 	<input

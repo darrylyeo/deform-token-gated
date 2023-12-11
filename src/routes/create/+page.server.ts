@@ -33,7 +33,7 @@ export const actions = {
 		})
 
 
-		const result = await (
+		const newPage = await (
 			e.params({
 				creatorAddress: e.Address,
 				title: e.str,
@@ -71,6 +71,10 @@ export const actions = {
 				throw error(500, e.message)
 			})
 	
-		throw redirect(303, `/page/${result.id}`)
+		return {
+			message: `Successfully created a new token-gated page!`,
+			pageId: newPage.id,
+			redirectTo: `/page/${newPage.id}`,
+		}
 	},
 } satisfies Actions
