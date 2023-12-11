@@ -24,6 +24,10 @@
 			/>
 		</div>
 	{/if}
+
+	<footer>
+		created by {$page.data.creatorAddress}
+	</footer>
 </article>
 
 
@@ -43,5 +47,10 @@
 		width: min(100%, 50em);
 		line-height: 1.5em;
 		margin: auto;
+	}
+
+	footer {
+		opacity: 0.5;
+		text-align: center;
 	}
 </style>
