@@ -7,6 +7,10 @@ module default {
 		content: str;
 		multi conditions: AccessCondition;
 
+		createdAt: datetime {
+			default := datetime_current();
+		}
+
 		isPublic := count(Page.conditions) = 0 or all(Page.conditions.conditionType = AccessConditionType.None);
 	}
 
