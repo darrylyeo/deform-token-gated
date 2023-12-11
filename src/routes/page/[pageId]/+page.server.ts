@@ -10,6 +10,9 @@ export const load: PageServerLoad = async ({
 }) => {
 	const { userAddress } = session.data
 
+	if(!userAddress)
+		throw error(401, `This page is token-gated. Sign in with your Ethereum wallet to access it.`)
+
 	console.log('page event.locals.session.data', session.data)
 
 	const page = await (
@@ -74,7 +77,7 @@ export const load: PageServerLoad = async ({
 	)).every(Boolean)
 
 	if(!canAccess)
-		throw error(403, `Address ${userAddress} does not have access to page ${pageId}`)
+		throw error(403, `Address ${userAddress} does not have access to page ${pageId}.`)
 
 	return page
 }
