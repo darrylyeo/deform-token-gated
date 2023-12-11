@@ -17,8 +17,13 @@ export const load: Load = async ({ request }) => {
 				contractAddress: true,
 				tokenId: true,
 			},
-			isPublic: true,
+			// isPublic: true,
+			// createdAt: true,
 			filter: page.isPublic,
+			// order_by: {
+			// 	expression: page.createdAt,
+			// 	direction: e.ASC,
+			// },
 		}))
 	).run(client)
 
