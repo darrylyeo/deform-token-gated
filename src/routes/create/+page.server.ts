@@ -3,7 +3,7 @@ import type { Address } from 'viem'
 import type { Actions } from './$types'
 
 import { client, e } from '../../database/client'
-import { redirect } from '@sveltejs/kit'
+import { error, redirect } from '@sveltejs/kit'
 
 
 export const actions = {
@@ -13,16 +13,16 @@ export const actions = {
 		const creatorAddress = data.get('creatorAddress') as unknown as Address
 		const title = data.get('title') as unknown as string
 		const content = data.get('content') as unknown as string
-		const conditionTypes = data.getAll('conditionType') as unknown as AccessConditionType[]
-		const chainIds = data.getAll('chainId').map(Number)
-		const contractAddresses = data.getAll('contractAddress') as unknown as Address[]
-		const tokenIds = data.getAll('tokenId').map(Number)
+		const conditionTypes = data.getAll('conditionType').map(conditionType => conditionType as AccessConditionType)
+		const chainIds = data.getAll('chainId').map(chainId => chainId ? Number(chainId) : undefined)
+		const contractAddresses = data.getAll('contractAddress').map(contractAddress => contractAddress ? contractAddress as Address : undefined)
+		const tokenIds = data.getAll('tokenId').map(tokenId => tokenId ? Number(tokenId) : undefined)
 
 		const conditions: SerializedAccessCondition[] = conditionTypes.map((type, i) => ({
 			type,
-			chainId: chainIds[i],
-			contractAddress: contractAddresses[i],
-			tokenId: tokenIds[i],
+			chainId: chainIds[i] ?? null,
+			contractAddress: contractAddresses[i] ?? null,
+			tokenId: tokenIds[i] ?? null,
 		}))
 
 		console.log({
@@ -31,7 +31,8 @@ export const actions = {
 			content,
 			conditions,
 		})
-		
+
+
 		const result = await (
 			e.params({
 				creatorAddress: e.Address,
@@ -51,9 +52,9 @@ export const actions = {
 					conditions: e.for(e.json_array_unpack(conditions), (condition) => (
 						e.insert(e.AccessCondition, {
 							conditionType: e.cast(e.AccessConditionType, condition.type),
-							chainId: e.cast(e.int16, condition.chainId || null),
-							contractAddress: e.cast(e.Address, condition.contractAddress || null),
-							tokenId: e.cast(e.bigint, condition.tokenId || null),
+							chainId: e.cast(e.int16, condition.chainId),
+							contractAddress: e.cast(e.Address, condition.contractAddress),
+							tokenId: e.cast(e.bigint, condition.tokenId),
 						})
 					))
 				})
@@ -65,9 +66,11 @@ export const actions = {
 				content,
 				conditions,
 			})
-
-		console.log({result})
-
-		return redirect(303, `/page/${result.id}`)
+			.catch(e => {
+				console.error(e)
+				throw error(500, e.message)
+			})
+	
+		throw redirect(303, `/page/${result.id}`)
 	},
 } satisfies Actions
